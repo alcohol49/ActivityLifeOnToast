@@ -2,6 +2,7 @@ package com.example.mingchun_hsu.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
+
+    int var = 0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,62 +50,81 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        showToast("onCreate");
+        if(savedInstanceState != null) {
+            var = savedInstanceState.getInt("var");
+            //showToast("onCreate, var=" + var++);
+        }
+
+        showToast("onCreate, var=" + ++var);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        showToast("onRestart");
+        //showToast("onRestart");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        showToast("onStart");
+        //showToast("onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        showToast("onResume");
+        //showToast("onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        showToast("onPause");
+        //showToast("onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        showToast("onStop");
+        //showToast("onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        showToast("onDestroy");
+        //showToast("onDestroy");
     }
 
     @Override
     protected void onSaveInstanceState (Bundle outState) {
+        outState.putInt("var", var);
+
         super.onSaveInstanceState(outState);
 
-        showToast("onSaveInstanceState");
+        //showToast("onSaveInstanceState");
     }
 
     @Override
     protected void onRestoreInstanceState (Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        showToast("onRestoreInstanceState");
+        if(savedInstanceState != null)
+            var = savedInstanceState.getInt("var");
+
+        var += 2;
+        showToast("onRestoreInstanceState, var=" + var);
+
+    }
+
+    @Override
+    public void onConfigurationChanged (Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+
+        showToast("onConfigurationChanged, Rotate, var=" + var);
     }
 }
